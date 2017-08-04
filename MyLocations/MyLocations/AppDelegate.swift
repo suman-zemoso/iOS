@@ -28,13 +28,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-            let tabBarController = window!.rootViewController as! UITabBarController
-            if let tabBarViewControllers = tabBarController.viewControllers {
-                let currentLocationViewController = tabBarViewControllers[0] as! CurrentLocationViewController
-                currentLocationViewController.managedObjectContext = managedObjectContext
-                let navigationController = tabBarViewControllers[1] as! UINavigationController
-                let locationsViewController = navigationController.viewControllers[0] as! LocationsViewController
-                locationsViewController.managedObjectContext = managedObjectContext
+        customizeAppearance()
+        let tabBarController = window!.rootViewController as! UITabBarController
+        if let tabBarViewControllers = tabBarController.viewControllers {
+            let currentLocationViewController = tabBarViewControllers[0] as! CurrentLocationViewController
+            currentLocationViewController.managedObjectContext = managedObjectContext
+            let navigationController = tabBarViewControllers[1] as! UINavigationController
+            let locationsViewController = navigationController.viewControllers[0] as! LocationsViewController
+            locationsViewController.managedObjectContext = managedObjectContext
+            let _ = locationsViewController.view
+            let mapViewController = tabBarViewControllers[2] as! MapViewController
+            mapViewController.managedObjectContext = managedObjectContext
             }
         print(applicationDocumentsDirectory)
         listenForFatalCoreDataNotifications()
@@ -88,6 +92,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } else {
             return rootViewController
         }
+    }
+    
+    func customizeAppearance() {
+        UINavigationBar.appearance().barTintColor = UIColor.black
+        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white ]
+        UITabBar.appearance().barTintColor = UIColor.black
+        let tintColor = UIColor(red: 255/255.0, green: 238/255.0, blue: 136/255.0, alpha: 1.0)
+        UITabBar.appearance().tintColor = tintColor
     }
 }
 
